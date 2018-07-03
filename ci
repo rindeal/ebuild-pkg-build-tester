@@ -3,9 +3,11 @@
 set -o pipefail
 set -ue
 
+export RINDEAL_DEBUG=1
+
 PKG="$( EIX_LIMIT=0 eix --in-overlay rindeal --only-names | shuf -n1 )"
 echo
-echo -e "\e[104mTesting '\e[1m$PKG\e[21m'\e[0m"
+echo -e "\e[36mTesting '\e[1m$PKG\e[21m'\e[0m"
 echo
 
 emerge=(
