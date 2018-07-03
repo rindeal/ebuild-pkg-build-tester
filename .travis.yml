@@ -2,16 +2,15 @@ sudo: required
 
 services: docker
 
+git: { depth: 1 }
+
 env:
-    - DOCKER_IMAGE="rindeal/portage-amd64-base" DOCKER_TAG="latest"
+    global:
+        - DOCKER_IMAGE="rindeal/portage-amd64-base"
+        - DOCKER_TAG="latest"
 
 install:
     - 'docker pull "${DOCKER_IMAGE}:${DOCKER_TAG}"'
 
-before_script:
-    - 'docker run --detach --privileged --name cont "${DOCKER_IMAGE}:${DOCKER_TAG}" /bin/sleep infinity'
-
 script:
-    - "PKG=$(docker exec --env EIX_LIMIT=0 cont sh -c 'eix --in-overlay rindeal --only-names | shuf -n1')"
-    - "echo PKG=$PKG"
-    - "docker exec cont emerge --jobs=4 --load-average=4 ${PKG}"
+    - 'docker run --privileged -v $PWD:/repo:ro "${DOCKER_IMAGE}:${DOCKER_TAG}" /repo/ci'

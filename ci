@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -o pipefail
+set -uex
+
+PKG="$( EIX_LIMIT=0 eix --in-overlay rindeal --only-names | shuf -n1 )"
+echo PKG=$PKG
+emerge --verbose-conflicts --verbose --jobs=4 --load-average=4 "${PKG}"
+
