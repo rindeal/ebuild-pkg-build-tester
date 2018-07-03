@@ -1,9 +1,15 @@
 #!/bin/bash
 
 set -o pipefail
-set -uex
+set -ue
 
 PKG="$( EIX_LIMIT=0 eix --in-overlay rindeal --only-names | shuf -n1 )"
-echo PKG=$PKG
-emerge --verbose-conflicts --verbose --jobs=4 --load-average=4 "${PKG}"
+echo
+echo -e "\e[104mTesting '\e[1m$PKG\e[21m'\e[0m"
+echo
 
+emerge=(
+    emerge --verbose-conflicts --verbose --jobs=4 --load-average=4 "${PKG}"
+)
+echo "${emerge[@]}"
+"${emerge[@]}"
