@@ -11,7 +11,7 @@ echo -e "\e[36mTesting '\e[1m$PKG\e[21m'\e[0m"
 echo
 
 emerge=(
-    emerge --verbose-conflicts --verbose --jobs=4 --load-average=4 "${PKG}"
+    env CONFIG_PROTECT= emerge --verbose-conflicts --verbose --jobs=4 --load-average=4 --autounmask-write y --quiet n --quiet-build y --quiet-fail n "${PKG}"
 )
 echo "${emerge[@]}"
 "${emerge[@]}"
